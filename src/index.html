@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyA Metálicas | Estructuras Metálicas, Pérgolas y Cerrajería en Cali</title>
+  <meta name="description"
+    content="Estructuras metálicas, pérgolas, techos y cerrajería técnica en acero e inoxidable. Diseño, fabricación e instalación en Cali, Colombia.">
+  <meta name="keywords"
+    content="estructuras metálicas, pérgolas, cerrajería, acero inoxidable, techos metálicos, Cali, Colombia">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&amp;family=Source+Sans+3:wght@300;400;500;600&amp;display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Oswald', 'sans-serif'],
+            body: ['Source Sans 3', 'sans-serif']
+          },
+          colors: {
+            steel: {
+              900: '#0a0f1a',
+              800: '#121a2b',
+              700: '#1a2540',
+              600: '#243156',
+              500: '#2d3d6b'
+            },
+            metal: {
+              400: '#8a9bb0',
+              300: '#b0bfcf',
+              200: '#d4dde8'
+            },
+            accent: {
+              500: '#e8a838',
+              600: '#d4952e',
+              400: '#f0be5c'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .app-wrapper {
+      height: 100%;
+      overflow: auto;
+    }
+
+    .hero-bg {
+      background: linear-gradient(135deg, #0a0f1a 0%, #1a2540 40%, #243156 70%, #0a0f1a 100%);
+    }
+
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(138, 155, 176, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 155, 176, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .steel-gradient {
+      background: linear-gradient(180deg, #121a2b 0%, #0a0f1a 100%);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .animate-fade-up-delay {
+      animation: fadeInUp 0.8s ease 0.2s forwards;
+      opacity: 0;
+    }
+
+    .animate-fade-up-delay2 {
+      animation: fadeInUp 0.8s ease 0.4s forwards;
+      opacity: 0;
+    }
+
+    .animate-slide {
+      animation: slideIn 0.6s ease forwards;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .project-card:hover .project-overlay {
+      opacity: 1;
+    }
+
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #e8a838;
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .form-input:focus {
+      border-color: #e8a838;
+      box-shadow: 0 0 0 2px rgba(232, 168, 56, 0.2);
+    }
+
+    .accordion-header {
+      cursor: pointer;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-content.open {
+      max-height: 500px;
+    }
+  </style>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body class="h-full bg-steel-900 text-metal-200 font-body">
+  <app-root></app-root>
+</body>
+
+</html>
