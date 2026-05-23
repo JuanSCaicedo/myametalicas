@@ -1,4 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
+import { environment } from '../environments/environment';
 
 declare const lucide: any;
 
@@ -9,6 +10,8 @@ declare const lucide: any;
 })
 export class AppComponent implements AfterViewInit {
   title = 'front';
+
+  private readonly googleSheetsEndpoint = environment.googleSheetsEndpoint;
 
   private readonly defaultConfig = {
     company_name: 'MYA METÁLICAS',
@@ -206,43 +209,75 @@ export class AppComponent implements AfterViewInit {
 
     const submitButton = document.getElementById('submit-btn') as HTMLButtonElement | null;
     const status = document.getElementById('form-status');
-    const dataSdk = (window as any).dataSdk;
 
-    if (!submitButton || !status || !dataSdk) {
+    if (!submitButton || !status) {
+      return;
+    }
+
+    if (!this.isGoogleSheetsConfigured()) {
+      status.className = 'mt-4 p-4 bg-red-600/20 border border-red-500/30 rounded text-red-300 text-sm';
+      status.textContent = 'Configura la URL de Google Apps Script para activar el envío a Sheets.';
+      status.classList.remove('hidden');
       return;
     }
 
     submitButton.disabled = true;
     submitButton.innerHTML = '<span>Enviando...</span>';
 
-    const result = await dataSdk.create({
-      name: this.getFieldValue('form-name'),
-      email: this.getFieldValue('form-email'),
-      phone: this.getFieldValue('form-phone'),
-      service: this.getFieldValue('form-service'),
-      material: this.getFieldValue('form-material'),
-      width: this.getFieldValue('form-width'),
-      height: this.getFieldValue('form-height'),
-      message: this.getFieldValue('form-message'),
-      submitted_at: new Date().toISOString()
-    });
+    try {
+      await fetch(this.googleSheetsEndpoint, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: new URLSearchParams(this.getContactFormPayload())
+      });
 
-    submitButton.disabled = false;
-    submitButton.innerHTML = '<span>Enviar Cotización</span> <i data-lucide="send" class="w-4 h-4"></i>';
-    lucide.createIcons();
-
-    status.classList.remove('hidden');
-
-    if (result.isOk) {
       status.className = 'mt-4 p-4 bg-green-600/20 border border-green-500/30 rounded text-green-300 text-sm';
       status.textContent = '✓ Cotización enviada. Nos contactaremos en máximo 24 horas.';
       (event.target as HTMLFormElement | null)?.reset();
-    } else {
+    } catch {
       status.className = 'mt-4 p-4 bg-red-600/20 border border-red-500/30 rounded text-red-300 text-sm';
       status.textContent = '✗ Error al enviar. Intenta nuevamente.';
+    } finally {
+      submitButton.disabled = false;
+      submitButton.innerHTML = '<span>Enviar Cotización</span> <i data-lucide="send" class="w-4 h-4"></i>';
+      lucide.createIcons();
+      status.classList.remove('hidden');
+      setTimeout(() => status.classList.add('hidden'), 5000);
     }
+  }
 
-    setTimeout(() => status.classList.add('hidden'), 5000);
+  private getContactFormPayload(): Record<string, string> {
+    return {
+      name: this.getFieldValue('form-name'),
+      email: this.getFieldValue('form-email'),
+      phone: this.getFieldValue('form-phone'),
+      service: this.getServiceLabel(this.getFieldValue('form-service')),
+      message: this.getFieldValue('form-message'),
+      source: 'myametalicas-website',
+      submitted_at: new Date().toISOString()
+    };
+  }
+
+  private getServiceLabel(serviceValue: string): string {
+    const serviceLabels: Record<string, string> = {
+      estructuras: 'Estructuras Metálicas',
+      'corte-doblez': 'Corte y Doblez de Lámina',
+      'hierro-forjado': 'Diseños en Hierro Forjado',
+      'puertas-ventanas': 'Puertas, Ventanas y Cerramientos',
+      'vidrio-aluminio': 'Vidrio y Aluminio Arquitectónico',
+      'cerrajeria-seguridad': 'Cerrajería y Seguridad',
+      mantenimientos: 'Mantenimientos Generales e Industriales',
+      otro: 'Otro / Consultoría'
+    };
+
+    return serviceLabels[serviceValue] ?? serviceValue;
+  }
+
+  private isGoogleSheetsConfigured(): boolean {
+    return this.googleSheetsEndpoint.startsWith('http');
   }
 
   private setText(id: string, value: string): void {
