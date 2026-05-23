@@ -56,15 +56,16 @@
         </div>
         <h1 id="hero-title"
           class="font-heading text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-none animate-fade-up-delay">
-          <span class="block">M.Y.A</span><span class="block mt-2 sm:mt-3 text-accent-500">METÁLICAS</span></h1>
+          <span class="block">M.Y.A</span><span class="block mt-2 sm:mt-3 text-accent-500">METÁLICAS</span>
+        </h1>
         <p id="hero-tagline"
           class="text-lg sm:text-xl text-metal-300 mt-6 max-w-xl animate-fade-up-delay2 leading-relaxed">
           Transformamos ideas en estructuras sólidas. Diseño, fabricación e instalación de estructuras
           metálicas, pérgolas, techos y cerrajería técnica con excelencia.</p>
         <div class="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap animate-fade-up-delay2"><a href="#contacto"
-          class="w-full sm:w-auto px-8 py-3.5 bg-accent-500 text-steel-900 font-heading font-semibold text-sm uppercase tracking-wider hover:bg-accent-400 transition rounded text-center">
+            class="w-full sm:w-auto px-8 py-3.5 bg-accent-500 text-steel-900 font-heading font-semibold text-sm uppercase tracking-wider hover:bg-accent-400 transition rounded text-center">
             Solicitar Cotización </a> <a href="#servicios"
-          class="w-full sm:w-auto px-8 py-3.5 border border-metal-400/30 text-metal-200 font-heading font-medium text-sm uppercase tracking-wider hover:border-accent-500/50 hover:text-white transition rounded text-center">
+            class="w-full sm:w-auto px-8 py-3.5 border border-metal-400/30 text-metal-200 font-heading font-medium text-sm uppercase tracking-wider hover:border-accent-500/50 hover:text-white transition rounded text-center">
             Nuestros Servicios </a>
         </div>
         <div class="mt-16 flex gap-12 animate-fade-up-delay2">
@@ -632,151 +633,3 @@
     </div>
   </footer>
 </div>
-<script>
-  const defaultConfig = {
-    company_name: 'MYA METÁLICAS',
-    tagline: 'Transformamos ideas en estructuras sólidas. Diseño, fabricación e instalación de estructuras metálicas, pérgolas, techos y cerrajería técnica con excelencia.',
-    about_text: 'Somos una empresa líder en el sector de metales y soluciones arquitectónicas en vidrio y acero. Nos especializamos en el diseño, fabricación e instalación de estructuras metálicas, techos y cerrajería técnica.',
-    contact_phone: '+57 302 249 5469',
-    contact_email: 'contacto&#64;myametalicas.com',
-    contact_address: 'Calle 2 #79-47, Cali, Valle del Cauca, Colombia',
-    whatsapp_link: 'https://api.whatsapp.com/send?phone=573022495469',
-    facebook_link: 'https://www.facebook.com/M.y.A.metalicas',
-    instagram_link: 'https://www.instagram.com/m.y.a.metalicas/',
-    font_family: 'Oswald',
-    font_size: 16
-  };
-
-  window.elementSdk.init({
-    defaultConfig,
-    onConfigChange: async (config) => {
-      const c = { ...defaultConfig, ...config };
-
-      // Text updates
-      document.getElementById('nav-company').textContent = c.company_name;
-      document.getElementById('hero-title').innerHTML = '<span class="block">' + c.company_name.split(' ')[0] + '</span><span class="block mt-2 sm:mt-3 text-accent-500">' + c.company_name.split(' ').slice(1).join(' ') + '</span>';
-      document.getElementById('hero-tagline').textContent = c.tagline;
-      document.getElementById('about-text').textContent = c.about_text;
-      document.getElementById('contact-phone').textContent = c.contact_phone;
-      document.getElementById('contact-email').textContent = c.contact_email;
-      document.getElementById('contact-address').textContent = c.contact_address;
-      document.getElementById('footer-company').textContent = c.company_name;
-      document.getElementById('footer-phone').textContent = c.contact_phone;
-      document.getElementById('footer-email').textContent = c.contact_email;
-      document.getElementById('footer-address').textContent = c.contact_address;
-
-      // Social links
-      document.getElementById('whatsapp-link').href = c.whatsapp_link;
-      document.getElementById('facebook-link').href = c.facebook_link;
-      document.getElementById('instagram-link').href = c.instagram_link;
-      document.getElementById('footer-facebook').href = c.facebook_link;
-      document.getElementById('footer-instagram').href = c.instagram_link;
-      document.getElementById('footer-whatsapp').href = c.whatsapp_link;
-
-      // Font family
-      const fontStack = `${c.font_family}, sans-serif`;
-      document.querySelectorAll('[class*="font-heading"]').forEach(el => {
-        el.style.fontFamily = fontStack;
-      });
-    },
-    mapToCapabilities: (config) => {
-      const c = { ...defaultConfig, ...config };
-      return {
-        recolorables: [],
-        borderables: [],
-        fontEditable: { get: () => c.font_family, set: (v) => { c.font_family = v; window.elementSdk.setConfig({ font_family: v }); } },
-        fontSizeable: { get: () => c.font_size, set: (v) => { c.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
-      };
-    },
-    mapToEditPanelValues: (config) => {
-      const c = { ...defaultConfig, ...config };
-      return new Map([
-        ['company_name', c.company_name],
-        ['tagline', c.tagline],
-        ['about_text', c.about_text],
-        ['contact_phone', c.contact_phone],
-        ['contact_email', c.contact_email],
-        ['contact_address', c.contact_address],
-        ['whatsapp_link', c.whatsapp_link],
-        ['facebook_link', c.facebook_link],
-        ['instagram_link', c.instagram_link]
-      ]);
-    }
-  });
-
-  // Data SDK init
-  window.dataSdk.init({ onDataChanged(data) { } });
-
-  // Accordion functionality
-  document.querySelectorAll('.accordion-header').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const content = btn.nextElementSibling;
-      const icon = btn.querySelector('[data-lucide]');
-
-      document.querySelectorAll('.accordion-content.open').forEach(other => {
-        if (other !== content) {
-          other.classList.remove('open');
-        }
-      });
-
-      content.classList.toggle('open');
-      icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0)';
-    });
-  });
-
-  // Contact form submission
-  document.getElementById('contact-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('submit-btn');
-    const status = document.getElementById('form-status');
-
-    btn.disabled = true;
-    btn.innerHTML = '<span>Enviando...</span>';
-
-    const result = await window.dataSdk.create({
-      name: document.getElementById('form-name').value,
-      email: document.getElementById('form-email').value,
-      phone: document.getElementById('form-phone').value || '',
-      service: document.getElementById('form-service').value || '',
-      material: document.getElementById('form-material').value || '',
-      width: document.getElementById('form-width').value || '',
-      height: document.getElementById('form-height').value || '',
-      message: document.getElementById('form-message').value,
-      submitted_at: new Date().toISOString()
-    });
-
-    btn.disabled = false;
-    btn.innerHTML = '<span>Enviar Cotización</span> <i data-lucide="send" class="w-4 h-4"></i>';
-    lucide.createIcons();
-
-    status.classList.remove('hidden');
-    if (result.isOk) {
-      status.className = 'mt-4 p-4 bg-green-600/20 border border-green-500/30 rounded text-green-300 text-sm';
-      status.textContent = '✓ Cotización enviada. Nos contactaremos en máximo 24 horas.';
-      e.target.reset();
-    } else {
-      status.className = 'mt-4 p-4 bg-red-600/20 border border-red-500/30 rounded text-red-300 text-sm';
-      status.textContent = '✗ Error al enviar. Intenta nuevamente.';
-    }
-    setTimeout(() => status.classList.add('hidden'), 5000);
-  });
-
-  // Mobile menu toggle
-  document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-    document.getElementById('mobile-menu').classList.toggle('hidden');
-  });
-
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-        document.getElementById('mobile-menu').classList.add('hidden');
-      }
-    });
-  });
-
-</script>
-<script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9fc20870d28327d4',t:'MTc3ODg0Njk1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
