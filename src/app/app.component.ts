@@ -235,7 +235,7 @@ export class AppComponent implements AfterViewInit {
       });
 
       status.className = 'mt-4 p-4 bg-green-600/20 border border-green-500/30 rounded text-green-300 text-sm';
-      status.textContent = '✓ Cotización enviada. Nos contactaremos en máximo 24 horas.';
+      status.textContent = '✓ Cotización enviada. Nos contactaremos contigo.';
       (event.target as HTMLFormElement | null)?.reset();
     } catch {
       status.className = 'mt-4 p-4 bg-red-600/20 border border-red-500/30 rounded text-red-300 text-sm';
