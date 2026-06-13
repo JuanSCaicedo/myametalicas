@@ -1,15 +1,77 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, HostListener } from '@angular/core';
 import { environment } from '../environments/environment';
 
 declare const lucide: any;
 
+interface ProjectModal {
+  title: string;
+  description: string;
+  image: string;
+  badge: string;
+  alt: string;
+}
+
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements AfterViewInit {
   title = 'front';
+
+  protected selectedProject: ProjectModal | null = null;
+  protected showBackToTop = false;
+
+  protected readonly pergolaProject: ProjectModal = {
+    title: 'Pérgola Residencial',
+    description: 'Pérgola bioclimática de 6x4m en acero inoxidable con lamas orientables.',
+    image: '/img/1.png',
+    badge: 'Diseño + Fabricación + Instalación',
+    alt: 'Pérgola Residencial'
+  };
+
+  protected readonly fachadaProject: ProjectModal = {
+    title: 'Fachada Comercial',
+    description: 'Sistema de vidrio templado con marco metálico para centro comercial.',
+    image: '/img/2.jpg',
+    badge: 'Diseño + Montaje',
+    alt: 'Fachada Comercial'
+  };
+
+  protected readonly techoProject: ProjectModal = {
+    title: 'Techo Industrial',
+    description: 'Cubierta metálica con estructura de acero para nave de 1000 m².',
+    image: '/img/3.jpg',
+    badge: 'Fabricación + Instalación',
+    alt: 'Techo Industrial'
+  };
+
+  protected readonly rejasProject: ProjectModal = {
+    title: 'Rejas de Seguridad',
+    description: 'Sistema completo de rejas en acero inoxidable para residencia de 5 pisos.',
+    image: '/img/4.jpg',
+    badge: 'Cerrajería Técnica',
+    alt: 'Rejas de Seguridad'
+  };
+
+  protected readonly columnasProject: ProjectModal = {
+    title: 'Columnas Estructurales',
+    description: 'Columnas de acero para estructura de oficinas de 8 niveles.',
+    image: '/img/5.jpg',
+    badge: 'Fabricación Especial',
+    alt: 'Columnas Estructurales'
+  };
+
+  protected readonly divisionesProject: ProjectModal = {
+    title: 'Divisiones Modernas',
+    description: 'Panel de vidrio laminado con marcos metálicos para espacios corporativos.',
+    image: '/img/5.jpg',
+    badge: 'Soluciones en Vidrio',
+    alt: 'Divisiones Modernas'
+  };
 
   private readonly googleSheetsEndpoint = environment.googleSheetsEndpoint;
 
@@ -34,6 +96,11 @@ export class AppComponent implements AfterViewInit {
     this.bindSmoothScroll();
     this.bindContactForm();
     lucide.createIcons();
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    this.showBackToTop = window.scrollY > 300;
   }
 
   private initSdk(): void {
@@ -92,6 +159,22 @@ export class AppComponent implements AfterViewInit {
     dataSdk.init({ onDataChanged() { } });
   }
 
+  protected openProjectModal(project: ProjectModal): void {
+    if (!project.image) {
+      return;
+    }
+
+    this.selectedProject = project;
+  }
+
+  protected closeProjectModal(): void {
+    this.selectedProject = null;
+  }
+
+  protected scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   private updateContent(config: any): void {
     this.setText('nav-company', config.company_name);
 
@@ -129,6 +212,7 @@ export class AppComponent implements AfterViewInit {
     }
 
     this.setHref('whatsapp-link', config.whatsapp_link);
+    this.setHref('floating-whatsapp-link', config.whatsapp_link);
     this.setHref('facebook-link', config.facebook_link);
     this.setHref('instagram-link', config.instagram_link);
     this.setHref('footer-facebook', config.facebook_link);
