@@ -36,7 +36,7 @@ export class AppComponent implements AfterViewInit {
   protected readonly fachadaProject: ProjectModal = {
     title: 'Fachada Comercial',
     description: 'Sistema de vidrio templado con marco metálico para centro comercial.',
-    image: '/img/2.jpg',
+    image: '/img/2.png',
     badge: 'Diseño + Montaje',
     alt: 'Fachada Comercial'
   };
@@ -68,7 +68,7 @@ export class AppComponent implements AfterViewInit {
   protected readonly divisionesProject: ProjectModal = {
     title: 'Divisiones Modernas',
     description: 'Panel de vidrio laminado con marcos metálicos para espacios corporativos.',
-    image: '/img/5.jpg',
+    image: '/img/6.png',
     badge: 'Soluciones en Vidrio',
     alt: 'Divisiones Modernas'
   };
